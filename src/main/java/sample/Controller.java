@@ -9,21 +9,25 @@ import oshi.software.os.OperatingSystem;
 
 public class Controller {
 
-    @FXML TextArea CPU_OUTPUT;
+    @FXML 
+    private TextArea cpuTextArea;
 
     CentralProcessor cpu;
 
     //Create all links to devices 
-    public void init() {
+    public void initialize() {
         SystemInfo systemInfo = new SystemInfo();
         OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
         HardwareAbstractionLayer hal = systemInfo.getHardware();
-        CentralProcessor cpu = hal.getProcessor();
+        cpu = hal.getProcessor();
+        cpuTextArea.setText("Test");
+        getCPUInfo();
     }
 
     //All functions retriving informations about system and devices:
     public void getCPUInfo() {
-        CPU_OUTPUT.setText(Long.toString(cpu.getMaxFreq()));
+        long maxFreq = cpu.getMaxFreq();
+        cpuTextArea.setText(Long.toString(maxFreq));
     }
 
 
