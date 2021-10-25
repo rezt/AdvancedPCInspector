@@ -10,6 +10,8 @@ import oshi.hardware.CentralProcessor;
 import oshi.hardware.HardwareAbstractionLayer;
 import oshi.software.os.OperatingSystem;
 
+import javax.swing.*;
+
 public class Main extends Application {
 
     @Override
@@ -32,5 +34,11 @@ public class Main extends Application {
         System.out.println(cpu.getLogicalProcessorCount());
         System.out.println(cpu.getMaxFreq());
         launch(args);
+
+        JFrame frame = new JFrame("APP");
+        frame.setContentPane(new App().panelMain);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
