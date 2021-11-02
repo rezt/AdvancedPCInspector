@@ -40,14 +40,51 @@ public class Controller {
         cpu = hal.getProcessor();
         cpuTextArea.setText("Test");
         getCPUInfo();
+        motherBoardInfo();
+        generalInfo();
+        ramInfo();
+        hardDriveInfo();
+        otherInfo();
+        helpInfo();
     }
 
     //All functions retriving informations about system and devices:
     public void getCPUInfo() {
         float maxFreq = (float)cpu.getMaxFreq();
         maxFreq = maxFreq/1000000000;
-        cpuTextArea.setText(Float.toString(maxFreq) + " GHZ");
+        cpuTextArea.setText("CPU Clock Speed:  " + Float.toString(maxFreq) + " GHZ");
     }
+
+    public void generalInfo()
+    {
+        generalTextArea.setText("Generalnie Informacje");
+    }
+
+    public void ramInfo()
+    {
+        ramTextArea.setText("Informacje o ramie");
+    }
+
+    public void motherBoardInfo()
+    {
+        motherboardTextArea.setText("Hello World!");
+    }
+
+    public void hardDriveInfo()
+    {
+        hardDrivTextArea.setText("Informacje o dysku twardym");
+    }
+
+    public void otherInfo()
+    {
+        otherTextArea.setText("Inne Informacje");
+    }
+
+    public void helpInfo()
+    {
+        helpTextArea.setText("Pomoc");
+    }
+
 
 
 
