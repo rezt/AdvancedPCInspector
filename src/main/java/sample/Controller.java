@@ -60,14 +60,14 @@ public class Controller {
     // Containers for results and other needed variables:
     
     int language;
-    List<String> Dyski = new ArrayList<>();
     CentralProcessor cpu;
+    HardwareAbstractionLayer hardware;
+    GlobalMemory globalMemory;
+    List<String> Dyski = new ArrayList<>();
     List<String> kartaGraficzna = new ArrayList<>();
     List<String> RAM = new ArrayList<>();
     List<OSFileStore> osFileStores;
     List<GraphicsCard> cards;
-    HardwareAbstractionLayer hardware;
-    GlobalMemory globalMemory;
     List<PhysicalMemory> physicalMemories;
 
     // Initialize all required "hooks".
@@ -88,6 +88,7 @@ public class Controller {
 
     // Get all the required information and send it to gui.
     public void setInfo() {
+        System.out.println(language);
         setCPUInfo();
         setGPUInfo();
         setMotherboardInfo();
@@ -106,12 +107,12 @@ public class Controller {
     public void setCPUInfo() {
         float maxFreq = (float) cpu.getMaxFreq();
         maxFreq = maxFreq / 1000000000;
-        System.out.println(language);
         cpuTextArea.setText(Constants.cpuFreqString[language] + Float.toString(maxFreq) + " GHZ");
     }
 
     // GPU related info:
     public void setGPUInfo() {
+        kartaGraficzna.clear();
         for (GraphicsCard karta : cards) {
 
             float Vram = (float) karta.getVRam();
@@ -140,6 +141,7 @@ public class Controller {
 
     // RAM related info:
     public void setRamInfo() {
+        RAM.clear();
         for (PhysicalMemory physicalMemory : physicalMemories) {
             RAM.add(Constants.ramManufacturerString[language] + physicalMemory.getManufacturer());
             RAM.add(Constants.ramMemoryTypeString[language] + physicalMemory.getMemoryType());
@@ -160,6 +162,7 @@ public class Controller {
 
     //Hard drive related info:
     public void setHardDriveInfo() {
+        Dyski.clear();
         for (OSFileStore fileStore : osFileStores) {
             Dyski.add(Constants.hardDriveDescriptionString[language] + fileStore.getDescription());
             Dyski.add(Constants.hardDriveLabelString[language] + fileStore.getLabel());
@@ -191,13 +194,24 @@ public class Controller {
 
     public void setToEnglish() {
         language = 0;
-        System.out.println(language);
+        clearAllAreas();
         setInfo();
     }
 
     public void setToPolish() {
         language = 1;
-        System.out.println(language);
+        clearAllAreas();
         setInfo();
+    }
+
+    public void clearAllAreas() {
+        generalTextArea.clear();
+        motherboardTextArea.clear();
+        cpuTextArea.clear();
+        ramTextArea.clear();
+        gpuTextArea.clear();
+        hardDriveTextArea.clear();
+        networkTextArea.clear();
+        helpTextArea.clear();
     }
 }
