@@ -4,9 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import oshi.SystemInfo;
-import oshi.hardware.CentralProcessor;
-import oshi.hardware.GraphicsCard;
-import oshi.hardware.HardwareAbstractionLayer;
+import oshi.hardware.*;
 import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
@@ -61,6 +59,7 @@ public class Controller {
     int language;
     List<String> Dyski = new ArrayList<>();
     List<String> kartaGraficzna = new ArrayList<>();
+    List<String> RAM = new ArrayList<>();
 
     //Create all links to devices 
     public void initialize() {
@@ -92,6 +91,19 @@ public class Controller {
                 kartaGraficzna.add("Vendor:" + karta.getVendor());
                 kartaGraficzna.add("Version:" + karta.getVersionInfo());
                 kartaGraficzna.add("Vram:" + karta.getVRam());
+            }
+
+
+            HardwareAbstractionLayer hardware = systemInfo.getHardware();
+            GlobalMemory globalMemory = hardware.getMemory();
+
+            List<PhysicalMemory> physicalMemories = globalMemory.getPhysicalMemory();
+            for (PhysicalMemory physicalMemory : physicalMemories) {
+                RAM.add("Manufacturer: " + physicalMemory.getManufacturer());
+                RAM.add("Memory type: " + physicalMemory.getMemoryType());
+                RAM.add("Bank/slot label: " + physicalMemory.getBankLabel());
+                RAM.add("Capacity: " + FormatUtil.formatBytes(physicalMemory.getCapacity()));
+                RAM.add("Clock speed: " + FormatUtil.formatHertz(physicalMemory.getClockSpeed()));
             }
 
             cpu = hal.getProcessor();
@@ -131,7 +143,9 @@ public class Controller {
     }
 
     public void setRamInfo() {
-        ramTextArea.setText("Informacje o ramie");
+        for (Object h : RAM) {
+            ramTextArea.appendText(h + "\n");
+        }
     }
 
     public void setMotherboardInfo() {
