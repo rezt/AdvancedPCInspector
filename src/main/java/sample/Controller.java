@@ -25,10 +25,10 @@ public class Controller {
     private TextArea ramTextArea;
 
     @FXML
-    private TextArea hardDrivTextArea;
+    private TextArea hardDriveTextArea;
 
     @FXML
-    private TextArea otherTextArea;
+    private TextArea networkTextArea;
 
     @FXML
     private TextArea helpTextArea;
@@ -42,48 +42,53 @@ public class Controller {
         HardwareAbstractionLayer hal = systemInfo.getHardware();
         cpu = hal.getProcessor();
         cpuTextArea.setText("Test");
-        getCPUInfo();
-        motherBoardInfo();
-        generalInfo();
-        ramInfo();
-        hardDriveInfo();
-        otherInfo();
-        helpInfo();
+        setCPUInfo();
+        setGPUInfo();
+        setMotherboardInfo();
+        setGeneralInfo();
+        setRamInfo();
+        setHardDriveInfo();
+        setNetworkInfo();
+        setHelpInfo();
     }
 
     //All functions retriving informations about system and devices:
-    public void getCPUInfo() {
+    public void setCPUInfo() {
         float maxFreq = (float)cpu.getMaxFreq();
         maxFreq = maxFreq/1000000000;
         cpuTextArea.setText("CPU Clock Speed:  " + Float.toString(maxFreq) + " GHZ");
     }
 
-    public void generalInfo()
+    public void setGPUInfo() {
+        gpuTextArea.setText("karta graficzna super mocna do krypto");
+    }
+
+    public void setGeneralInfo()
     {
         generalTextArea.setText("Generalnie Informacje");
     }
 
-    public void ramInfo()
+    public void setRamInfo()
     {
         ramTextArea.setText("Informacje o ramie");
     }
 
-    public void motherBoardInfo()
+    public void setMotherboardInfo()
     {
         motherboardTextArea.setText("Hello World!");
     }
 
-    public void hardDriveInfo()
+    public void setHardDriveInfo()
     {
-        hardDrivTextArea.setText("Informacje o dysku twardym");
+        hardDriveTextArea.setText("Informacje o dysku twardym");
     }
 
-    public void otherInfo()
+    public void setNetworkInfo()
     {
-        otherTextArea.setText("Inne Informacje");
+        networkTextArea.setText("Inne Informacje o SIECI");
     }
 
-    public void helpInfo()
+    public void setHelpInfo()
     {
         helpTextArea.setText("Pomoc");
     }
