@@ -19,6 +19,9 @@ public class Controller {
     private TextArea cpuTextArea;
 
     @FXML
+    private TextArea gpuTextArea;
+
+    @FXML
     private TextArea ramTextArea;
 
     @FXML
