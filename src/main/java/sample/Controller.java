@@ -113,12 +113,20 @@ public class Controller {
     // GPU related info:
     public void setGPUInfo() {
         for (GraphicsCard karta : cards) {
-            kartaGraficzna.add("Name:" + karta.getName());
-            kartaGraficzna.add("Device ID:" + karta.getDeviceId());
-            kartaGraficzna.add("Vendor:" + karta.getVendor());
-            kartaGraficzna.add("Version:" + karta.getVersionInfo());
-            kartaGraficzna.add("Vram:" + karta.getVRam());
+
+            float Vram = (float) karta.getVRam();
+            Vram = Vram / 1000000000;
+
+            String result = karta.getVersionInfo();
+            result = result.replaceAll(".+=", "");
+
+            kartaGraficzna.add(Constants.gpuNameString[language] + karta.getName());
+            kartaGraficzna.add(Constants.gpuIDString[language] + karta.getDeviceId());
+            kartaGraficzna.add(Constants.gpuVendorString[language] + karta.getVendor());
+            kartaGraficzna.add(Constants.gpuVersionString[language] + result);
+            kartaGraficzna.add(Constants.gpuVramString[language] + String.format("%.02f", Vram) + " GB");
             kartaGraficzna.add("--------------------------------------------");
+
         }
         for (Object g : kartaGraficzna) {
             gpuTextArea.appendText(g + "\n");
@@ -133,11 +141,11 @@ public class Controller {
     // RAM related info:
     public void setRamInfo() {
         for (PhysicalMemory physicalMemory : physicalMemories) {
-            RAM.add("Manufacturer: " + physicalMemory.getManufacturer());
-            RAM.add("Memory type: " + physicalMemory.getMemoryType());
-            RAM.add("Bank/slot label: " + physicalMemory.getBankLabel());
-            RAM.add("Capacity: " + FormatUtil.formatBytes(physicalMemory.getCapacity()));
-            RAM.add("Clock speed: " + FormatUtil.formatHertz(physicalMemory.getClockSpeed()));
+            RAM.add(Constants.ramManufacturerString[language] + physicalMemory.getManufacturer());
+            RAM.add(Constants.ramMemoryTypeString[language] + physicalMemory.getMemoryType());
+            RAM.add(Constants.ramBankString[language] + physicalMemory.getBankLabel());
+            RAM.add(Constants.ramCapacityString[language] + FormatUtil.formatBytes(physicalMemory.getCapacity()));
+            RAM.add(Constants.ramFreqString[language] + FormatUtil.formatHertz(physicalMemory.getClockSpeed()));
             RAM.add("--------------------------------------------");
         }
         for (Object h : RAM) {
@@ -153,16 +161,13 @@ public class Controller {
     //Hard drive related info:
     public void setHardDriveInfo() {
         for (OSFileStore fileStore : osFileStores) {
-            Dyski.add("Opis: " + fileStore.getDescription() + "\n");
-            Dyski.add("Label: " + fileStore.getLabel() + "\n");
-            Dyski.add("Partycja: " + fileStore.getMount() + "\n");
-            Dyski.add("Nazwa: " + fileStore.getName() + "\n");
-            Dyski.add("System Plików: " + fileStore.getType() + "\n");
-            // Dyski.add("UUID: " + fileStore.getUUID() + "\n");
-            // Dyski.add("Volume: " + fileStore.getVolume() + "\n");
-            Dyski.add("Wolna przestrzeń: " + FormatUtil.formatBytes(fileStore.getFreeSpace()) + "\n");
-            Dyski.add("Całkowita przestrzeń: " + FormatUtil.formatBytes(fileStore.getTotalSpace()) + "\n");
-            //Dyski.add("Użytkowa przestrzeń: " + FormatUtil.formatBytes(fileStore.getUsableSpace()) + "\n");
+            Dyski.add(Constants.hardDriveDescriptionString[language] + fileStore.getDescription());
+            Dyski.add(Constants.hardDriveLabelString[language] + fileStore.getLabel());
+            Dyski.add(Constants.hardDriveMount[language] + fileStore.getMount());
+            Dyski.add(Constants.hardDriveName[language] + fileStore.getName());
+            Dyski.add(Constants.hardDriveType[language] + fileStore.getType());
+            Dyski.add(Constants.hardDriveFree[language] + FormatUtil.formatBytes(fileStore.getFreeSpace()));
+            Dyski.add(Constants.hardDriveTotal[language] + FormatUtil.formatBytes(fileStore.getTotalSpace()));
             Dyski.add("--------------------------------------------");
         }
         for (Object o : Dyski) {
