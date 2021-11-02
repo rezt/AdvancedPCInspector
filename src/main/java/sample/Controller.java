@@ -5,6 +5,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
+import oshi.hardware.GraphicsCard;
 import oshi.hardware.HardwareAbstractionLayer;
 import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
@@ -59,6 +60,7 @@ public class Controller {
     CentralProcessor cpu;
     int language;
     List<String> Dyski = new ArrayList<>();
+    List<String> kartaGraficzna = new ArrayList<>();
 
     //Create all links to devices 
     public void initialize() {
@@ -82,6 +84,16 @@ public class Controller {
             //Dyski.add("Użytkowa przestrzeń: " + FormatUtil.formatBytes(fileStore.getUsableSpace()) + "\n");
 
             HardwareAbstractionLayer hal = systemInfo.getHardware();
+
+            List<GraphicsCard> cards = hal.getGraphicsCards();
+            for (GraphicsCard karta : cards) {
+                kartaGraficzna.add("Name:" + karta.getName());
+                kartaGraficzna.add("Device ID:" + karta.getDeviceId());
+                kartaGraficzna.add("Vendor:" + karta.getVendor());
+                kartaGraficzna.add("Version:" + karta.getVersionInfo());
+                kartaGraficzna.add("Vram:" + karta.getVRam());
+            }
+
             cpu = hal.getProcessor();
 
             setInfo();
@@ -109,7 +121,9 @@ public class Controller {
     }
 
     public void setGPUInfo() {
-        gpuTextArea.setText("karta graficzna super mocna do krypto");
+        for (Object g : kartaGraficzna) {
+            gpuTextArea.appendText(g + "\n");
+        }
     }
 
     public void setGeneralInfo() {
