@@ -70,18 +70,16 @@ public class Controller {
         List<OSFileStore> osFileStores = ((FileSystem) fileSystem).getFileStores();
 
         for (OSFileStore fileStore : osFileStores) {
-            Dyski.add("Description: " + fileStore.getDescription() + "\n");
+            Dyski.add("Opis: " + fileStore.getDescription() + "\n");
             Dyski.add("Label: " + fileStore.getLabel() + "\n");
-            Dyski.add("Logical Volume: " + fileStore.getLogicalVolume() + "\n");
-            Dyski.add("Mount: " + fileStore.getMount() + "\n");
-            Dyski.add("Name: " + fileStore.getName() + "\n");
-            Dyski.add("Options: " + fileStore.getOptions() + "\n");
-            Dyski.add("Type: " + fileStore.getType() + "\n");
-            Dyski.add("UUID: " + fileStore.getUUID() + "\n");
-            Dyski.add("Volume: " + fileStore.getVolume() + "\n");
-            Dyski.add("Free Space: " + FormatUtil.formatBytes(fileStore.getFreeSpace()) + "\n");
-            Dyski.add("Total Space: " + FormatUtil.formatBytes(fileStore.getTotalSpace()) + "\n");
-            Dyski.add("Usable Space: " + FormatUtil.formatBytes(fileStore.getUsableSpace()) + "\n");
+            Dyski.add("Partycja: " + fileStore.getMount() + "\n");
+            Dyski.add("Nazwa: " + fileStore.getName() + "\n");
+            Dyski.add("System Plików: " + fileStore.getType() + "\n");
+            // Dyski.add("UUID: " + fileStore.getUUID() + "\n");
+            // Dyski.add("Volume: " + fileStore.getVolume() + "\n");
+            Dyski.add("Wolna przestrzeń: " + FormatUtil.formatBytes(fileStore.getFreeSpace()) + "\n");
+            Dyski.add("Całkowita przestrzeń: " + FormatUtil.formatBytes(fileStore.getTotalSpace()) + "\n");
+            //Dyski.add("Użytkowa przestrzeń: " + FormatUtil.formatBytes(fileStore.getUsableSpace()) + "\n");
 
             HardwareAbstractionLayer hal = systemInfo.getHardware();
             cpu = hal.getProcessor();
