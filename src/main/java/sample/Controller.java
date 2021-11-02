@@ -9,8 +9,26 @@ import oshi.software.os.OperatingSystem;
 
 public class Controller {
 
+    @FXML
+    private TextArea generalTextArea;
+
+    @FXML
+    private TextArea motherboardTextArea;
+
     @FXML 
     private TextArea cpuTextArea;
+
+    @FXML
+    private TextArea ramTextArea;
+
+    @FXML
+    private TextArea hardDrivTextArea;
+
+    @FXML
+    private TextArea otherTextArea;
+
+    @FXML
+    private TextArea helpTextArea;
 
     CentralProcessor cpu;
 
