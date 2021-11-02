@@ -44,8 +44,9 @@ public class Controller {
 
     //All functions retriving informations about system and devices:
     public void getCPUInfo() {
-        long maxFreq = cpu.getMaxFreq();
-        cpuTextArea.setText(Long.toString(maxFreq));
+        float maxFreq = (float)cpu.getMaxFreq();
+        maxFreq = maxFreq/1000000000;
+        cpuTextArea.setText(Float.toString(maxFreq) + " GHZ");
     }
 
 
