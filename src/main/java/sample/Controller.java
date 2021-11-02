@@ -15,6 +15,8 @@ import java.util.List;
 
 public class Controller {
 
+    // FXML declarations required for JavaFX:
+
     @FXML
     private TextArea generalTextArea;
     @FXML
@@ -55,9 +57,9 @@ public class Controller {
     @FXML
     private Tab helpTabName;
 
+    // Containers for results and other needed variables:
     
     int language;
-
     List<String> Dyski = new ArrayList<>();
     CentralProcessor cpu;
     List<String> kartaGraficzna = new ArrayList<>();
@@ -68,7 +70,7 @@ public class Controller {
     GlobalMemory globalMemory;
     List<PhysicalMemory> physicalMemories;
 
-    //Create all links to devices 
+    // Initialize all required "hooks".
     public void initialize() {
         language = 0;
         SystemInfo systemInfo = new SystemInfo();
@@ -84,7 +86,7 @@ public class Controller {
         }
 
 
-
+    // Get all the required information and send it to gui.
     public void setInfo() {
         setCPUInfo();
         setGPUInfo();
@@ -96,7 +98,11 @@ public class Controller {
         setHelpInfo();
     }
 
-    //All functions retriving informations about system and devices:
+    //--------------------------------------------------------------
+    // All functions retriving informations about system and devices:
+    //--------------------------------------------------------------
+
+    // CPU related info:
     public void setCPUInfo() {
         float maxFreq = (float) cpu.getMaxFreq();
         maxFreq = maxFreq / 1000000000;
@@ -104,6 +110,7 @@ public class Controller {
         cpuTextArea.setText(Constants.cpuFreqString[language] + Float.toString(maxFreq) + " GHZ");
     }
 
+    // GPU related info:
     public void setGPUInfo() {
         for (GraphicsCard karta : cards) {
             kartaGraficzna.add("Name:" + karta.getName());
@@ -118,10 +125,12 @@ public class Controller {
         }
     }
 
+    // General info:
     public void setGeneralInfo() {
         generalTextArea.setText("Generalnie Informacje");
     }
 
+    // RAM related info:
     public void setRamInfo() {
         for (PhysicalMemory physicalMemory : physicalMemories) {
             RAM.add("Manufacturer: " + physicalMemory.getManufacturer());
@@ -136,10 +145,12 @@ public class Controller {
         }
     }
 
+    // Motherboard related info:
     public void setMotherboardInfo() {
         motherboardTextArea.setText("Hello World!");
     }
 
+    //Hard drive related info:
     public void setHardDriveInfo() {
         for (OSFileStore fileStore : osFileStores) {
             Dyski.add("Opis: " + fileStore.getDescription() + "\n");
@@ -159,13 +170,19 @@ public class Controller {
         }
     }
 
+    // Network related info:
     public void setNetworkInfo() {
         networkTextArea.setText("Inne Informacje o SIECI");
     }
 
+    // Help tab.
     public void setHelpInfo() {
         helpTextArea.setText("Pomoc");
     }
+
+    //---------------------
+    // Language selectors:
+    //---------------------
 
     public void setToEnglish() {
         language = 0;
