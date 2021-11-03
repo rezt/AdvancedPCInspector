@@ -7,7 +7,9 @@ import oshi.SystemInfo;
 import oshi.hardware.*;
 import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
+import oshi.software.os.OSSession;
 import oshi.software.os.OperatingSystem;
+import oshi.software.os.OperatingSystem.OSVersionInfo;
 import oshi.util.FormatUtil;
 
 import java.util.ArrayList;
@@ -63,24 +65,28 @@ public class Controller {
     CentralProcessor cpu;
     HardwareAbstractionLayer hardware;
     GlobalMemory globalMemory;
-    List<String> Dyski = new ArrayList<>();
-    List<String> kartaGraficzna = new ArrayList<>();
-    List<String> RAM = new ArrayList<>();
-    List<OSFileStore> osFileStores;
-    List<GraphicsCard> cards;
-    List<PhysicalMemory> physicalMemories;
+    OperatingSystem operatingSystem;
+    SystemInfo systemInfo;
+    FileSystem fileSystem;
+    List<String> fileStoreStringList = new ArrayList<>();
+    List<String> gpuStringList = new ArrayList<>();
+    List<String> ramStringList = new ArrayList<>();
+    List<String> osStringList = new ArrayList<>();
+    List<OSFileStore> osFileStoreList;
+    List<GraphicsCard> gpuList;
+    List<PhysicalMemory> physicalMemoryList;
 
     // Initialize all required "hooks".
     public void initialize() {
         language = 0;
-        SystemInfo systemInfo = new SystemInfo();
-        OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
-        FileSystem fileSystem = operatingSystem.getFileSystem();
-        osFileStores = ((FileSystem) fileSystem).getFileStores();
-        HardwareAbstractionLayer hardware = systemInfo.getHardware();
-        cards = hardware.getGraphicsCards();
+        systemInfo = new SystemInfo();
+        operatingSystem = systemInfo.getOperatingSystem();
+        fileSystem = operatingSystem.getFileSystem();
+        osFileStoreList = ((FileSystem) fileSystem).getFileStores();
+        hardware = systemInfo.getHardware();
+        gpuList = hardware.getGraphicsCards();
         globalMemory = hardware.getMemory();
-        physicalMemories = globalMemory.getPhysicalMemory();
+        physicalMemoryList = globalMemory.getPhysicalMemory();
         cpu = hardware.getProcessor();
         setInfo();
         }
@@ -103,55 +109,24 @@ public class Controller {
     // All functions retriving informations about system and devices:
     //--------------------------------------------------------------
 
-    // CPU related info:
-    public void setCPUInfo() {
-        float maxFreq = (float) cpu.getMaxFreq();
-        maxFreq = maxFreq / 1000000000;
-        cpuTextArea.setText(Constants.cpuFreqString[language] + Float.toString(maxFreq) + " GHZ");
-    }
-
-    // GPU related info:
-    public void setGPUInfo() {
-        kartaGraficzna.clear();
-        for (GraphicsCard karta : cards) {
-
-            float Vram = (float) karta.getVRam();
-            Vram = Vram / 1000000000;
-
-            String result = karta.getVersionInfo();
-            result = result.replaceAll(".+=", "");
-
-            kartaGraficzna.add(Constants.gpuNameString[language] + karta.getName());
-            kartaGraficzna.add(Constants.gpuIDString[language] + karta.getDeviceId());
-            kartaGraficzna.add(Constants.gpuVendorString[language] + karta.getVendor());
-            kartaGraficzna.add(Constants.gpuVersionString[language] + result);
-            kartaGraficzna.add(Constants.gpuVramString[language] + String.format("%.02f", Vram) + " GB");
-            kartaGraficzna.add("--------------------------------------------");
-
-        }
-        for (Object g : kartaGraficzna) {
-            gpuTextArea.appendText(g + "\n");
-        }
-    }
-
     // General info:
     public void setGeneralInfo() {
-        generalTextArea.setText("Generalnie Informacje");
-    }
-
-    // RAM related info:
-    public void setRamInfo() {
-        RAM.clear();
-        for (PhysicalMemory physicalMemory : physicalMemories) {
-            RAM.add(Constants.ramManufacturerString[language] + physicalMemory.getManufacturer());
-            RAM.add(Constants.ramMemoryTypeString[language] + physicalMemory.getMemoryType());
-            RAM.add(Constants.ramBankString[language] + physicalMemory.getBankLabel());
-            RAM.add(Constants.ramCapacityString[language] + FormatUtil.formatBytes(physicalMemory.getCapacity()));
-            RAM.add(Constants.ramFreqString[language] + FormatUtil.formatHertz(physicalMemory.getClockSpeed()));
-            RAM.add("--------------------------------------------");
+        osStringList.clear();
+        osStringList.add(Constants.general.FamilyString[language] + operatingSystem.getFamily());
+        osStringList.add(Constants.general.ManufacturerString[language] + operatingSystem.getManufacturer());
+        osStringList.add(Constants.general.VersionString[language] + operatingSystem.getVersionInfo().getVersion());
+        osStringList.add(Constants.general.ThreadCountString[language] + operatingSystem.getThreadCount());
+        osStringList.add(Constants.general.sessionsString[language]);
+        List<OSSession> sessions = operatingSystem.getSessions();
+        List<String> users = new ArrayList<>();
+        for (OSSession i : sessions) {
+            users.add(i.getUserName());
         }
-        for (Object h : RAM) {
-            ramTextArea.appendText(h + "\n");
+        for (Object s : users) {
+            osStringList.add("- " + s + "\n");
+        }
+        for (Object o : osStringList) {
+            generalTextArea.appendText(o + "\n");
         }
     }
 
@@ -160,20 +135,70 @@ public class Controller {
         motherboardTextArea.setText("Hello World!");
     }
 
+    // CPU related info:
+    public void setCPUInfo() {
+        cpuTabName.setText(Constants.cpu.cpuTabNameString[language]);
+        float maxFreq = (float) cpu.getMaxFreq();
+        maxFreq = maxFreq / 1000000000;
+        cpuTextArea.setText(Constants.cpu.cpuFreqString[language] + Float.toString(maxFreq) + " GHZ");
+    }
+
+    // GPU related info:
+    public void setGPUInfo() {
+        gpuStringList.clear();
+        for (GraphicsCard gpu : gpuList) {
+
+            float Vram = (float) gpu.getVRam();
+            Vram = Vram / 1000000000;
+
+            String result = gpu.getVersionInfo();
+            result = result.replaceAll(".+=", "");
+
+            gpuStringList.add(Constants.gpu.gpuNameString[language] + gpu.getName());
+            gpuStringList.add(Constants.gpu.gpuIDString[language] + gpu.getDeviceId());
+            gpuStringList.add(Constants.gpu.gpuVendorString[language] + gpu.getVendor());
+            gpuStringList.add(Constants.gpu.gpuVersionString[language] + result);
+            gpuStringList.add(Constants.gpu.gpuVramString[language] + String.format("%.02f", Vram) + " GB");
+            gpuStringList.add("--------------------------------------------");
+
+        }
+        for (Object g : gpuStringList) {
+            gpuTextArea.appendText(g + "\n");
+        }
+    }
+
+    // RAM related info:
+    public void setRamInfo() {
+        ramStringList.clear();
+        for (PhysicalMemory physicalMemory : physicalMemoryList) {
+            ramStringList.add(Constants.ram.ramManufacturerString[language] + physicalMemory.getManufacturer());
+            ramStringList.add(Constants.ram.ramMemoryTypeString[language] + physicalMemory.getMemoryType());
+            ramStringList.add(Constants.ram.ramBankString[language] + physicalMemory.getBankLabel());
+            ramStringList.add(Constants.ram.ramCapacityString[language] + FormatUtil.formatBytes(physicalMemory.getCapacity()));
+            ramStringList.add(Constants.ram.ramFreqString[language] + FormatUtil.formatHertz(physicalMemory.getClockSpeed()));
+            ramStringList.add("--------------------------------------------");
+        }
+        for (Object h : ramStringList) {
+            ramTextArea.appendText(h + "\n");
+        }
+    }
+
+    
+
     //Hard drive related info:
     public void setHardDriveInfo() {
-        Dyski.clear();
-        for (OSFileStore fileStore : osFileStores) {
-            Dyski.add(Constants.hardDriveDescriptionString[language] + fileStore.getDescription());
-            Dyski.add(Constants.hardDriveLabelString[language] + fileStore.getLabel());
-            Dyski.add(Constants.hardDriveMount[language] + fileStore.getMount());
-            Dyski.add(Constants.hardDriveName[language] + fileStore.getName());
-            Dyski.add(Constants.hardDriveType[language] + fileStore.getType());
-            Dyski.add(Constants.hardDriveFree[language] + FormatUtil.formatBytes(fileStore.getFreeSpace()));
-            Dyski.add(Constants.hardDriveTotal[language] + FormatUtil.formatBytes(fileStore.getTotalSpace()));
-            Dyski.add("--------------------------------------------");
+        fileStoreStringList.clear();
+        for (OSFileStore fileStore : osFileStoreList) {
+            fileStoreStringList.add(Constants.hardDrive.hardDriveDescriptionString[language] + fileStore.getDescription());
+            fileStoreStringList.add(Constants.hardDrive.hardDriveLabelString[language] + fileStore.getLabel());
+            fileStoreStringList.add(Constants.hardDrive.hardDriveMount[language] + fileStore.getMount());
+            fileStoreStringList.add(Constants.hardDrive.hardDriveName[language] + fileStore.getName());
+            fileStoreStringList.add(Constants.hardDrive.hardDriveType[language] + fileStore.getType());
+            fileStoreStringList.add(Constants.hardDrive.hardDriveFree[language] + FormatUtil.formatBytes(fileStore.getFreeSpace()));
+            fileStoreStringList.add(Constants.hardDrive.hardDriveTotal[language] + FormatUtil.formatBytes(fileStore.getTotalSpace()));
+            fileStoreStringList.add("--------------------------------------------");
         }
-        for (Object o : Dyski) {
+        for (Object o : fileStoreStringList) {
             hardDriveTextArea.appendText(o + "\n");
         }
     }
@@ -214,4 +239,6 @@ public class Controller {
         networkTextArea.clear();
         helpTextArea.clear();
     }
+
+
 }
