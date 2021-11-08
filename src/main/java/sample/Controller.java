@@ -112,11 +112,11 @@ public class Controller {
     // General info:
     public void setGeneralInfo() {
         osStringList.clear();
-        osStringList.add(Constants.general.FamilyString[language] + operatingSystem.getFamily());
-        osStringList.add(Constants.general.ManufacturerString[language] + operatingSystem.getManufacturer());
-        osStringList.add(Constants.general.VersionString[language] + operatingSystem.getVersionInfo().getVersion());
-        osStringList.add(Constants.general.ThreadCountString[language] + operatingSystem.getThreadCount());
-        osStringList.add(Constants.general.sessionsString[language]);
+        osStringList.add(Constants.general.family[language] + operatingSystem.getFamily());
+        osStringList.add(Constants.general.manufacturer[language] + operatingSystem.getManufacturer());
+        osStringList.add(Constants.general.versionString[language] + operatingSystem.getVersionInfo().getVersion());
+        osStringList.add(Constants.general.threadCount[language] + operatingSystem.getThreadCount());
+        osStringList.add(Constants.general.sessions[language]);
         List<OSSession> sessions = operatingSystem.getSessions();
         List<String> users = new ArrayList<>();
         for (OSSession i : sessions) {
@@ -137,10 +137,10 @@ public class Controller {
 
     // CPU related info:
     public void setCPUInfo() {
-        cpuTabName.setText(Constants.cpu.cpuTabNameString[language]);
+        cpuTabName.setText(Constants.cpu.tabName[language]);
         float maxFreq = (float) cpu.getMaxFreq();
         maxFreq = maxFreq / 1000000000;
-        cpuTextArea.setText(Constants.cpu.cpuFreqString[language] + Float.toString(maxFreq) + " GHZ");
+        cpuTextArea.setText(Constants.cpu.freq[language] + Float.toString(maxFreq) + " GHZ");
     }
 
     // GPU related info:
@@ -154,11 +154,11 @@ public class Controller {
             String result = gpu.getVersionInfo();
             result = result.replaceAll(".+=", "");
 
-            gpuStringList.add(Constants.gpu.gpuNameString[language] + gpu.getName());
-            gpuStringList.add(Constants.gpu.gpuIDString[language] + gpu.getDeviceId());
-            gpuStringList.add(Constants.gpu.gpuVendorString[language] + gpu.getVendor());
-            gpuStringList.add(Constants.gpu.gpuVersionString[language] + result);
-            gpuStringList.add(Constants.gpu.gpuVramString[language] + String.format("%.02f", Vram) + " GB");
+            gpuStringList.add(Constants.gpu.name[language] + gpu.getName());
+            gpuStringList.add(Constants.gpu.id[language] + gpu.getDeviceId());
+            gpuStringList.add(Constants.gpu.vendor[language] + gpu.getVendor());
+            gpuStringList.add(Constants.gpu.version[language] + result);
+            gpuStringList.add(Constants.gpu.vram[language] + String.format("%.02f", Vram) + " GB");
             gpuStringList.add("--------------------------------------------");
 
         }
@@ -171,11 +171,11 @@ public class Controller {
     public void setRamInfo() {
         ramStringList.clear();
         for (PhysicalMemory physicalMemory : physicalMemoryList) {
-            ramStringList.add(Constants.ram.ramManufacturerString[language] + physicalMemory.getManufacturer());
-            ramStringList.add(Constants.ram.ramMemoryTypeString[language] + physicalMemory.getMemoryType());
-            ramStringList.add(Constants.ram.ramBankString[language] + physicalMemory.getBankLabel());
-            ramStringList.add(Constants.ram.ramCapacityString[language] + FormatUtil.formatBytes(physicalMemory.getCapacity()));
-            ramStringList.add(Constants.ram.ramFreqString[language] + FormatUtil.formatHertz(physicalMemory.getClockSpeed()));
+            ramStringList.add(Constants.ram.manufacturer[language] + physicalMemory.getManufacturer());
+            ramStringList.add(Constants.ram.memoryType[language] + physicalMemory.getMemoryType());
+            ramStringList.add(Constants.ram.bank[language] + physicalMemory.getBankLabel());
+            ramStringList.add(Constants.ram.capacity[language] + FormatUtil.formatBytes(physicalMemory.getCapacity()));
+            ramStringList.add(Constants.ram.freq[language] + FormatUtil.formatHertz(physicalMemory.getClockSpeed()));
             ramStringList.add("--------------------------------------------");
         }
         for (Object h : ramStringList) {
@@ -189,13 +189,13 @@ public class Controller {
     public void setHardDriveInfo() {
         fileStoreStringList.clear();
         for (OSFileStore fileStore : osFileStoreList) {
-            fileStoreStringList.add(Constants.hardDrive.hardDriveDescriptionString[language] + fileStore.getDescription());
-            fileStoreStringList.add(Constants.hardDrive.hardDriveLabelString[language] + fileStore.getLabel());
-            fileStoreStringList.add(Constants.hardDrive.hardDriveMount[language] + fileStore.getMount());
-            fileStoreStringList.add(Constants.hardDrive.hardDriveName[language] + fileStore.getName());
-            fileStoreStringList.add(Constants.hardDrive.hardDriveType[language] + fileStore.getType());
-            fileStoreStringList.add(Constants.hardDrive.hardDriveFree[language] + FormatUtil.formatBytes(fileStore.getFreeSpace()));
-            fileStoreStringList.add(Constants.hardDrive.hardDriveTotal[language] + FormatUtil.formatBytes(fileStore.getTotalSpace()));
+            fileStoreStringList.add(Constants.hardDrive.description[language] + fileStore.getDescription());
+            fileStoreStringList.add(Constants.hardDrive.label[language] + fileStore.getLabel());
+            fileStoreStringList.add(Constants.hardDrive.mount[language] + fileStore.getMount());
+            fileStoreStringList.add(Constants.hardDrive.name[language] + fileStore.getName());
+            fileStoreStringList.add(Constants.hardDrive.type[language] + fileStore.getType());
+            fileStoreStringList.add(Constants.hardDrive.free[language] + FormatUtil.formatBytes(fileStore.getFreeSpace()));
+            fileStoreStringList.add(Constants.hardDrive.total[language] + FormatUtil.formatBytes(fileStore.getTotalSpace()));
             fileStoreStringList.add("--------------------------------------------");
         }
         for (Object o : fileStoreStringList) {

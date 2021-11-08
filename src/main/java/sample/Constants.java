@@ -3,11 +3,11 @@ package sample;
 public class Constants {
 
     static class general {
-        static String[] FamilyString = {"Operating system family: ", "Rodzina systemu operacyjnego: "};
-        static String[] ManufacturerString = {"Operating system manufacturer: ", "Producent systemu operacyjnego: "};
-        static String[] VersionString = {"Operating system version: ", "Wersja systemu operacyjnego: "};
-        static String[] ThreadCountString = {"Number of threads currently running: ", "Liczba aktualnie aktywnych wątków: "};
-        static String[] sessionsString = {"Active users: ", "Aktywni użytkownicy: "};
+        static String[] family = {"Operating system family: ", "Rodzina systemu operacyjnego: "};
+        static String[] manufacturer = {"Operating system manufacturer: ", "Producent systemu operacyjnego: "};
+        static String[] version = {"Operating system version: ", "Wersja systemu operacyjnego: "};
+        static String[] threadCount = {"Number of threads currently running: ", "Liczba aktualnie aktywnych wątków: "};
+        static String[] sessions = {"Active users: ", "Aktywni użytkownicy: "};
     }
 
     static class motherboard {
@@ -15,35 +15,35 @@ public class Constants {
     }
 
     static class cpu {
-        static String[] cpuTabNameString = {"CPU","Procesor"};
-        static String[] cpuFreqString = {"CPU maximum frequency: ","Maksymalne taktowanie CPU: "};
+        static String[] tabName = {"CPU","Procesor"};
+        static String[] freq = {"CPU maximum frequency: ","Maksymalne taktowanie CPU: "};
         
     }
 
     static class gpu {
-        static String[] gpuNameString = {"Name: ","Nazwa: "};
-        static String[] gpuIDString = {"Device ID: ","ID Urządzenia: "};
-        static String[] gpuVendorString = {"Vendor: ","Sprzedawca: "};
-        static String[] gpuVersionString = {"Driver Version: ","Wersja Sterownika: "};
-        static String[] gpuVramString = {"Video RAM: ","Video RAM: "};
+        static String[] name = {"Name: ","Nazwa: "};
+        static String[] id = {"Device ID: ","ID Urządzenia: "};
+        static String[] vendor = {"Vendor: ","Sprzedawca: "};
+        static String[] version = {"Driver Version: ","Wersja Sterownika: "};
+        static String[] vram = {"Video RAM: ","Video RAM: "};
     }
     
     static class ram {
-        static String[] ramManufacturerString = {"Manufacturer: ","Producent: "};
-        static String[] ramMemoryTypeString = {"Memory type: ","Rodzaj Pamięci: "};
-        static String[] ramBankString = {"Bank/slot label: ","Bank Pamięci: "};
-        static String[] ramCapacityString = {"Capacity: ","Przepustowość: "};
-        static String[] ramFreqString = {"RAM Clock Speed: ","Taktowanie zegara pamięci RAM: "};
+        static String[] manufacturer = {"Manufacturer: ","Producent: "};
+        static String[] memoryType = {"Memory type: ","Rodzaj Pamięci: "};
+        static String[] bank = {"Bank/slot label: ","Bank Pamięci: "};
+        static String[] capacity = {"Capacity: ","Przepustowość: "};
+        static String[] freq = {"RAM Clock Speed: ","Taktowanie zegara pamięci RAM: "};
     }
 
     static class hardDrive {
-        static String[] hardDriveDescriptionString = {"Description: ","Opis: "};
-        static String[] hardDriveLabelString = {"Label: ","Label: "};
-        static String[] hardDriveMount = {"Mount: ","Partycja: "};
-        static String[] hardDriveName = {"Name: ","Nazwa: "};
-        static String[] hardDriveType = {"Type: ","System Plików: "};
-        static String[] hardDriveFree = {"Free Space: ","Wolna przestrzeń: "};
-        static String[] hardDriveTotal = {"Total Space: ","Całkowita przestrzeń: "};
+        static String[] description = {"Description: ","Opis: "};
+        static String[] label = {"Label: ","Etykieta: "};
+        static String[] mount = {"Mount: ","Partycja: "};
+        static String[] name = {"Name: ","Nazwa: "};
+        static String[] type = {"Type: ","System Plików: "};
+        static String[] free = {"Free Space: ","Wolna przestrzeń: "};
+        static String[] total = {"Total Space: ","Całkowita przestrzeń: "};
     }
     
     static class network {
