@@ -3,6 +3,7 @@ package sample;
 public class Constants {
 
     static class general {
+        static String[] tabName = {"General","Ogólne"};
         static String[] family = {"Operating system family: ", "Rodzina systemu operacyjnego: "};
         static String[] manufacturer = {"Operating system manufacturer: ", "Producent systemu operacyjnego: "};
         static String[] version = {"Operating system version: ", "Wersja systemu operacyjnego: "};
@@ -11,7 +12,7 @@ public class Constants {
     }
 
     static class motherboard {
-
+        static String[] tabName = {"Motherboard","Płyta główna"};
     }
 
     static class cpu {
@@ -21,6 +22,7 @@ public class Constants {
     }
 
     static class gpu {
+        static String[] tabName = {"GPU","Karta graficzna"};
         static String[] name = {"Name: ","Nazwa: "};
         static String[] id = {"Device ID: ","ID Urządzenia: "};
         static String[] vendor = {"Vendor: ","Sprzedawca: "};
@@ -37,6 +39,7 @@ public class Constants {
     }
 
     static class hardDrive {
+        static String[] tabName = {"Hard drive","Dysk twardy"};
         static String[] description = {"Description: ","Opis: "};
         static String[] label = {"Label: ","Etykieta: "};
         static String[] mount = {"Mount: ","Partycja: "};
@@ -47,11 +50,17 @@ public class Constants {
     }
     
     static class network {
-
+        static String[] tabName = {"Network","Sieć"};
     }
     
-    static class help {
-
+    static class other {
+        static String[] tabName = {"Other","Inne"};
+        static String[] name = {"Name: ","Nazwa: "};
+        static String[] productId = {"Product ID: ","ID produktu: "};
+        static String[] serialNumber = {"Serial number: ","Numer seryjny: "};
+        static String[] udid = {"Unique device id: ","Unikalne id urządzenia: "};
+        static String[] vendor = {"Vendor: ","Producent: "};
+        static String[] vendorId = {"Vendor id: ",": "};
     }
     
 }

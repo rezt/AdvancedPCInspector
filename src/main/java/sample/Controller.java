@@ -9,7 +9,6 @@ import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OSSession;
 import oshi.software.os.OperatingSystem;
-import oshi.software.os.OperatingSystem.OSVersionInfo;
 import oshi.util.FormatUtil;
 
 import java.util.ArrayList;
@@ -55,9 +54,9 @@ public class Controller {
     private Tab networkTabName;
 
     @FXML
-    private TextArea helpTextArea;
+    private TextArea otherTextArea;
     @FXML
-    private Tab helpTabName;
+    private Tab otherTabName;
 
     // Containers for results and other needed variables:
     
@@ -72,6 +71,8 @@ public class Controller {
     List<String> gpuStringList = new ArrayList<>();
     List<String> ramStringList = new ArrayList<>();
     List<String> osStringList = new ArrayList<>();
+    List<String> usbStringList = new ArrayList<>();
+    List<UsbDevice> usbDevicesList;
     List<OSFileStore> osFileStoreList;
     List<GraphicsCard> gpuList;
     List<PhysicalMemory> physicalMemoryList;
@@ -86,6 +87,7 @@ public class Controller {
         hardware = systemInfo.getHardware();
         gpuList = hardware.getGraphicsCards();
         globalMemory = hardware.getMemory();
+        usbDevicesList = hardware.getUsbDevices(false);
         physicalMemoryList = globalMemory.getPhysicalMemory();
         cpu = hardware.getProcessor();
         setInfo();
@@ -102,7 +104,7 @@ public class Controller {
         setRamInfo();
         setHardDriveInfo();
         setNetworkInfo();
-        setHelpInfo();
+        setOtherInfo();
     }
 
     //--------------------------------------------------------------
@@ -111,10 +113,11 @@ public class Controller {
 
     // General info:
     public void setGeneralInfo() {
+        generalTabName.setText(Constants.general.tabName[language]);
         osStringList.clear();
         osStringList.add(Constants.general.family[language] + operatingSystem.getFamily());
         osStringList.add(Constants.general.manufacturer[language] + operatingSystem.getManufacturer());
-        osStringList.add(Constants.general.versionString[language] + operatingSystem.getVersionInfo().getVersion());
+        osStringList.add(Constants.general.version[language] + operatingSystem.getVersionInfo().getVersion());
         osStringList.add(Constants.general.threadCount[language] + operatingSystem.getThreadCount());
         osStringList.add(Constants.general.sessions[language]);
         List<OSSession> sessions = operatingSystem.getSessions();
@@ -132,6 +135,7 @@ public class Controller {
 
     // Motherboard related info:
     public void setMotherboardInfo() {
+        motherboardTabName.setText(Constants.motherboard.tabName[language]);
         motherboardTextArea.setText("Hello World!");
     }
 
@@ -145,6 +149,7 @@ public class Controller {
 
     // GPU related info:
     public void setGPUInfo() {
+        gpuTabName.setText(Constants.gpu.tabName[language]);
         gpuStringList.clear();
         for (GraphicsCard gpu : gpuList) {
 
@@ -187,6 +192,7 @@ public class Controller {
 
     //Hard drive related info:
     public void setHardDriveInfo() {
+        harddriveTabName.setText(Constants.hardDrive.tabName[language]);
         fileStoreStringList.clear();
         for (OSFileStore fileStore : osFileStoreList) {
             fileStoreStringList.add(Constants.hardDrive.description[language] + fileStore.getDescription());
@@ -205,12 +211,27 @@ public class Controller {
 
     // Network related info:
     public void setNetworkInfo() {
+        networkTabName.setText(Constants.network.tabName[language]);
         networkTextArea.setText("Inne Informacje o SIECI");
     }
 
     // Help tab.
-    public void setHelpInfo() {
-        helpTextArea.setText("Pomoc");
+    public void setOtherInfo() {
+        otherTabName.setText(Constants.other.tabName[language]);
+        usbStringList.clear();
+        System.out.println(usbDevicesList.size());
+        for (UsbDevice usbDevice : usbDevicesList) {
+            usbStringList.add(Constants.other.name[language] + usbDevice.getName());
+            usbStringList.add(Constants.other.productId[language] + usbDevice.getProductId());
+            usbStringList.add(Constants.other.serialNumber[language] + usbDevice.getSerialNumber());
+            usbStringList.add(Constants.other.udid[language] + usbDevice.getUniqueDeviceId());
+            usbStringList.add(Constants.other.vendor[language] + usbDevice.getVendor());
+            usbStringList.add(Constants.other.vendorId[language] + usbDevice.getVendorId());
+            usbStringList.add("--------------------------------------------");
+        }
+        for (Object o : usbStringList) {
+            otherTextArea.appendText(o + "\n");
+        }
     }
 
     //---------------------
@@ -237,7 +258,7 @@ public class Controller {
         gpuTextArea.clear();
         hardDriveTextArea.clear();
         networkTextArea.clear();
-        helpTextArea.clear();
+        otherTextArea.clear();
     }
 
 
