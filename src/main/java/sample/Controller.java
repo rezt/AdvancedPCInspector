@@ -67,12 +67,14 @@ public class Controller {
     OperatingSystem operatingSystem;
     SystemInfo systemInfo;
     FileSystem fileSystem;
+    Baseboard baseboard;
     List<String> fileStoreStringList = new ArrayList<>();
     List<String> gpuStringList = new ArrayList<>();
     List<String> ramStringList = new ArrayList<>();
     List<String> osStringList = new ArrayList<>();
     List<String> usbStringList = new ArrayList<>();
     List<String> cpuStringList = new ArrayList<>();
+    List<String> motherboardStringList = new ArrayList<>();
     List<UsbDevice> usbDevicesList;
     List<OSFileStore> osFileStoreList;
     List<GraphicsCard> gpuList;
@@ -91,6 +93,7 @@ public class Controller {
         usbDevicesList = hardware.getUsbDevices(false);
         physicalMemoryList = globalMemory.getPhysicalMemory();
         cpu = hardware.getProcessor();
+        baseboard = hardware.getComputerSystem().getBaseboard();
         setInfo();
     }
 
@@ -137,7 +140,16 @@ public class Controller {
     // Motherboard related info:
     public void setMotherboardInfo() {
         motherboardTabName.setText(Constants.motherboard.tabName[language]);
-        motherboardTextArea.setText("Hello World!");
+        motherboardStringList.clear();
+
+        motherboardStringList.add(Constants.motherboard.manufacturer[language] + baseboard.getManufacturer());
+        motherboardStringList.add(Constants.motherboard.model[language] + baseboard.getModel());
+        motherboardStringList.add(Constants.motherboard.serial[language] + baseboard.getSerialNumber());
+        motherboardStringList.add(Constants.motherboard.version[language] + baseboard.getVersion());
+
+        for (Object w : motherboardStringList) {
+            motherboardTextArea.appendText(w + "\n");
+        }
     }
 
     // CPU related info:
