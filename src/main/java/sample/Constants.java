@@ -18,6 +18,12 @@ public class Constants {
     static class cpu {
         static String[] tabName = {"CPU","Procesor"};
         static String[] freq = {"CPU maximum frequency: ","Maksymalne taktowanie CPU: "};
+        static String[] cpuVendor = {"Vendor: ", "Producent: "};
+        static String[] cpuName = {"Processor Name: ", "Nazwa Procesora: "};
+        static String[] cpuID = {"Processor ID: ", "ID Procesora: "};
+        static String[] cpuArchitekture = {"Microarchitecture: ", "Architektura: "};
+        static String[] cpuPhysThreads = {"Number of physical CPUs: ", "Liczba rdzeni fizycznych: "};
+        static String[] cpuLogThreads = {"Number of logical CPUs: ", "Liczba rdzeni logicznych: "};
         
     }
 

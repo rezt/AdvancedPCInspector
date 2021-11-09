@@ -59,7 +59,7 @@ public class Controller {
     private Tab otherTabName;
 
     // Containers for results and other needed variables:
-    
+
     int language;
     CentralProcessor cpu;
     HardwareAbstractionLayer hardware;
@@ -72,6 +72,7 @@ public class Controller {
     List<String> ramStringList = new ArrayList<>();
     List<String> osStringList = new ArrayList<>();
     List<String> usbStringList = new ArrayList<>();
+    List<String> cpuStringList = new ArrayList<>();
     List<UsbDevice> usbDevicesList;
     List<OSFileStore> osFileStoreList;
     List<GraphicsCard> gpuList;
@@ -91,7 +92,7 @@ public class Controller {
         physicalMemoryList = globalMemory.getPhysicalMemory();
         cpu = hardware.getProcessor();
         setInfo();
-        }
+    }
 
 
     // Get all the required information and send it to gui.
@@ -142,10 +143,25 @@ public class Controller {
     // CPU related info:
     public void setCPUInfo() {
         cpuTabName.setText(Constants.cpu.tabName[language]);
-        float maxFreq = (float) cpu.getMaxFreq();
-        maxFreq = maxFreq / 1000000000;
-        cpuTextArea.setText(Constants.cpu.freq[language] + Float.toString(maxFreq) + " GHZ");
+        cpuStringList.clear();
+
+            CentralProcessor.ProcessorIdentifier cpuI = cpu.getProcessorIdentifier();
+            float maxFreq = (float) cpu.getMaxFreq();
+            maxFreq = maxFreq / 1000000000;
+            cpuStringList.add(Constants.cpu.cpuVendor[language] + cpuI.getVendor());
+            cpuStringList.add(Constants.cpu.cpuName[language] + cpuI.getName());
+            cpuStringList.add(Constants.cpu.cpuID[language] + cpuI.getProcessorID());
+            cpuStringList.add(Constants.cpu.cpuArchitekture[language] + cpuI.getMicroarchitecture());
+            cpuStringList.add(Constants.cpu.cpuPhysThreads[language] + cpu.getPhysicalProcessorCount());
+            cpuStringList.add(Constants.cpu.cpuLogThreads[language] + cpu.getLogicalProcessorCount());
+            cpuTextArea.setText(Constants.cpu.freq[language] + Float.toString(maxFreq) + " GHZ \n");
+
+        for (Object l : cpuStringList) {
+            cpuTextArea.appendText(l + "\n");
+        }
     }
+
+
 
     // GPU related info:
     public void setGPUInfo() {
