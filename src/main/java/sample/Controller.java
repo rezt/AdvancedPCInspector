@@ -75,10 +75,12 @@ public class Controller {
     List<String> usbStringList = new ArrayList<>();
     List<String> cpuStringList = new ArrayList<>();
     List<String> motherboardStringList = new ArrayList<>();
+    List<String> networkStringList = new ArrayList<>();
     List<UsbDevice> usbDevicesList;
     List<OSFileStore> osFileStoreList;
     List<GraphicsCard> gpuList;
     List<PhysicalMemory> physicalMemoryList;
+    List<NetworkIF> networkIfs;
 
     // Initialize all required "hooks".
     public void initialize() {
@@ -94,6 +96,7 @@ public class Controller {
         physicalMemoryList = globalMemory.getPhysicalMemory();
         cpu = hardware.getProcessor();
         baseboard = hardware.getComputerSystem().getBaseboard();
+        networkIfs = hardware.getNetworkIFs();
         setInfo();
     }
 
@@ -163,10 +166,10 @@ public class Controller {
             cpuStringList.add(Constants.cpu.cpuVendor[language] + cpuI.getVendor());
             cpuStringList.add(Constants.cpu.cpuName[language] + cpuI.getName());
             cpuStringList.add(Constants.cpu.cpuID[language] + cpuI.getProcessorID());
+            cpuStringList.add(Constants.cpu.freq[language] + Float.toString(maxFreq) + " GHZ");
             cpuStringList.add(Constants.cpu.cpuArchitekture[language] + cpuI.getMicroarchitecture());
             cpuStringList.add(Constants.cpu.cpuPhysThreads[language] + cpu.getPhysicalProcessorCount());
             cpuStringList.add(Constants.cpu.cpuLogThreads[language] + cpu.getLogicalProcessorCount());
-            cpuTextArea.setText(Constants.cpu.freq[language] + Float.toString(maxFreq) + " GHZ \n");
 
         for (Object l : cpuStringList) {
             cpuTextArea.appendText(l + "\n");
@@ -240,7 +243,25 @@ public class Controller {
     // Network related info:
     public void setNetworkInfo() {
         networkTabName.setText(Constants.network.tabName[language]);
-        networkTextArea.setText("Inne Informacje o SIECI");
+        networkStringList.clear();
+
+        for (NetworkIF network : networkIfs) {
+            networkStringList.add(Constants.network.name[language] + network.getName());
+            networkStringList.add(Constants.network.displayName[language] + network.getDisplayName());
+            networkStringList.add(Constants.network.mac[language] + network.getMacaddr());
+            for (String ip : network.getIPv4addr()) {
+                networkStringList.add(Constants.network.ipv4[language] + ip);
+            }
+            for (String ip : network.getIPv6addr()) {
+                networkStringList.add(Constants.network.ipv6[language] + ip);
+            }
+            networkStringList.add("--------------------------------------------");
+        }
+        
+
+        for (Object w : networkStringList) {
+            networkTextArea.appendText(w + "\n");
+        }
     }
 
     // Help tab.

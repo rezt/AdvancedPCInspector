@@ -15,8 +15,8 @@ public class Constants {
         static String[] tabName = {"Motherboard","Płyta główna"};
         static String[] manufacturer = {"Motherboard manufacturer: ","Producent płyty głównej: "};
         static String[] model = {"Motherboard model: ","Model płyty głównej: "};
-        static String[] serial = {"Motherboard serial number:","Numer seryjny płyty głównej: "};
-        static String[] version = {"Motherboard version:","Wersja płyty głównej: "};
+        static String[] serial = {"Motherboard serial number: ","Numer seryjny płyty głównej: "};
+        static String[] version = {"Motherboard version: ","Wersja płyty głównej: "};
     }
 
     static class cpu {
@@ -61,6 +61,11 @@ public class Constants {
     
     static class network {
         static String[] tabName = {"Network","Sieć"};
+        static String[] name = {"Interface name: ", "Nazwa interfejsu: "};
+        static String[] displayName = {"Description: ", "Opis: "};
+        static String[] mac = {"MAC address: ", "Adres MAC: "};
+        static String[] ipv4 = {"IPV4 address: ", "Adres IPV4: "};
+        static String[] ipv6 = {"IPV6 address: ", "Adres IPV6: "};
     }
     
     static class other {
