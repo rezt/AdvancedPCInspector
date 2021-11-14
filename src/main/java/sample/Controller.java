@@ -149,6 +149,7 @@ public class Controller {
         motherboardStringList.add(Constants.motherboard.model[language] + baseboard.getModel());
         motherboardStringList.add(Constants.motherboard.serial[language] + baseboard.getSerialNumber());
         motherboardStringList.add(Constants.motherboard.version[language] + baseboard.getVersion());
+        motherboardStringList.add("--------------------------------------------");
 
         for (Object w : motherboardStringList) {
             motherboardTextArea.appendText(w + "\n");
@@ -170,6 +171,7 @@ public class Controller {
             cpuStringList.add(Constants.cpu.cpuArchitekture[language] + cpuI.getMicroarchitecture());
             cpuStringList.add(Constants.cpu.cpuPhysThreads[language] + cpu.getPhysicalProcessorCount());
             cpuStringList.add(Constants.cpu.cpuLogThreads[language] + cpu.getLogicalProcessorCount());
+            cpuStringList.add("--------------------------------------------");
 
         for (Object l : cpuStringList) {
             cpuTextArea.appendText(l + "\n");
